@@ -1,67 +1,101 @@
-# Site — Davi Aulas de Bateria
+# Just Drums — Site do Davi Ramos
 
-Site institucional de página única para divulgar e vender aulas de bateria.
-HTML, CSS e JavaScript puros: **nenhuma dependência, nenhum build, nenhum servidor**.
+Site portfólio do baterista e professor **Davi Ramos**, para divulgar as aulas
+presenciais em Brasília e entorno.
 
-> ⚠️ **Conteúdo provisório.** Este site foi construído sem o arquivo
-> `claude_instructions.md` (ele não está no repositório). Todo dado de negócio
-> — telefone, valores, bio, endereço, depoimentos — está como **placeholder**
-> e precisa ser substituído. Os pontos estão marcados com `AJUSTAR` no código
-> e listados no checklist abaixo.
+**Stack:** HTML5 semântico + CSS nativo com variáveis + Vanilla JS (Opção A do
+briefing). Sem dependências, sem build, sem back-end.
 
 ## Como abrir
 
-Basta abrir `index.html` no navegador. Para testar com um servidor local:
+Abra `index.html` no navegador. Para testar com servidor local:
 
 ```bash
-python -m http.server 8000
-# depois acesse http://localhost:8000
+python -m http.server 8000   # http://localhost:8000
 ```
+
+## ⚠️ Mídias que faltam
+
+O site foi construído sem acesso aos arquivos de mídia (eles estavam na máquina
+local, não no repositório). O código já aponta para os caminhos corretos e
+**não quebra** enquanto os arquivos não existem: a logo some e sobra o nome
+escrito, a foto vira um quadro pontilhado e os vídeos ausentes não geram card.
+
+Basta colocar os arquivos nos caminhos abaixo:
+
+| Arquivo | Onde colocar | Se faltar |
+|---|---|---|
+| Logo | `assets/img/logo.png` | wordmark "JustDrums" sem símbolo |
+| Foto de perfil | `assets/img/perfil.jpg` | moldura pontilhada com aviso |
+| Vídeos | `assets/video/video-1.mp4` … `video-4.mp4` | card não aparece |
+
+Os vídeos são listados na constante `VIDEOS`, no topo de `assets/js/main.js` —
+é lá que se muda nome do arquivo, título do card e capa. Pode ter quantos
+quiser; a proporção de cada vídeo é detectada automaticamente, então vertical e
+horizontal convivem no mesmo grid sem corte.
+
+## Envio do formulário
+
+Por padrão o formulário abre o e-mail do visitante com a mensagem já montada
+para **daviwrrf@gmail.com**. Funciona na hora, sem cadastro em lugar nenhum.
+
+Para o envio acontecer em segundo plano (sem abrir o cliente de e-mail), crie
+uma conta gratuita no [Formspree](https://formspree.io) com o e-mail
+`daviwrrf@gmail.com` e cole o endpoint na constante `FORMSPREE`, no topo de
+`assets/js/main.js`:
+
+```js
+var FORMSPREE = 'https://formspree.io/f/seu-codigo';
+```
+
+Nos dois casos a confirmação exibida é a mesma:
+**"Informações encaminhadas com sucesso! Aguarde meu contato."**
+
+### Regras de validação já implementadas
+
+| Campo | Regra |
+|---|---|
+| Nome | obrigatório, mínimo 2 caracteres |
+| Sobrenome | opcional |
+| Sexo | obrigatório, apenas Masculino ou Feminino |
+| Sua idade | obrigatório, número inteiro de 1 a 120 |
+| Telefone | opcional; se preenchido, precisa ser `(61) 99999-9999` |
+| E-mail | obrigatório, formato validado |
+| Tenho interesse | checkbox, marcado por padrão |
+
+## Contatos e links usados no site
+
+- WhatsApp: **(61) 99514-9266** — `https://wa.me/5561995149266` com mensagem pronta
+- E-mail do professor: **daviwrrf@gmail.com**
+- YouTube: [Just Drums Davi Ramos](http://www.youtube.com/@justdrumsDaviRamos)
+- Instagram: [@daviramosdrums](https://www.instagram.com/daviramosdrums/)
+
+## Identidade visual
+
+Não havia `tailwind.config.js`, `theme.css`, `variables.css` nem tokens de marca
+no diretório, então foi adotado o fallback previsto no briefing: **tema escuro
+de alto contraste**, com âmbar (`#f2b53c`) como cor de marca e verde do WhatsApp
+nas ações de contato.
+
+Toda a paleta está no `:root` de `assets/css/styles.css`. Quando a paleta oficial
+da logo estiver definida, mudar `--accent` e as superfícies ali já reflete no
+site inteiro.
 
 ## Estrutura
 
 ```
-index.html              página única (hero, sobre, aulas, método, planos,
-                        depoimentos, dúvidas, contato)
-assets/css/styles.css   todo o estilo, com variáveis de tema no :root
-assets/js/main.js       menu, animações, metrônomo e formulário
-assets/img/             pasta para as fotos (ainda vazia)
+index.html              página única
+assets/css/styles.css   estilos e variáveis de tema
+assets/js/main.js       config (VIDEOS, FORMSPREE), menu, galeria e formulário
+assets/img/             logo.png e perfil.jpg
+assets/video/           vídeos da galeria
 ```
 
-## Checklist do que falta preencher
-
-| Onde | O que ajustar |
-|---|---|
-| `assets/js/main.js` → `WHATSAPP` | número real em formato `55DDNNNNNNNNN` |
-| `index.html` → seção **Contato** | telefone, e-mail, Instagram, endereço, horários |
-| `index.html` → links `wa.me/5500000000000` | 2 ocorrências (contato e botão flutuante) |
-| `index.html` → seção **Sobre** | biografia real do Davi |
-| `index.html` → `.stats` | números reais (`data-count` e o texto visível) |
-| `index.html` → seção **Planos** | valores, formas de pagamento, reposição |
-| `index.html` → seção **Depoimentos** | depoimentos reais, com autorização de uso |
-| `index.html` → **Dúvidas** | idade mínima e política de remarcação |
-| `index.html` → `<title>` e `og:*` | nome comercial e cidade, se houver |
-| `assets/img/` | foto do Davi e fotos do estúdio |
-
-Trocar a identidade visual é uma edição só: as cores vivem em `--bg`,
-`--accent` e companhia, no `:root` de `styles.css` (há um bloco equivalente
-para tema claro em `prefers-color-scheme: light`).
-
-## O que já está implementado
-
-- Layout responsivo (uma coluna no celular, duas no desktop) com menu sanduíche
-- Tema escuro e claro automáticos, seguindo a preferência do sistema
-- Metrônomo funcional via Web Audio API, com 40–208 BPM e acento no tempo 1
-- Formulário que monta a mensagem e abre o WhatsApp — sem back-end e sem
-  armazenar dados
-- Máscara de telefone e validação de nome/telefone antes do envio
-- Animações de entrada, contagem dos números e destaque do item de menu ativo
-- Acessibilidade: `skip link`, foco visível, `aria-*` nos componentes
-  interativos e respeito a `prefers-reduced-motion`
-- Estilo de impressão que esconde os elementos interativos
+Seções: cabeçalho, hero, sobre mim, aulas, galeria de vídeos, redes sociais,
+contato e rodapé.
 
 ## Publicação
 
-Por ser um site estático, qualquer hospedagem serve. Com GitHub Pages:
-`Settings → Pages → Source: Deploy from a branch`, apontando para a branch e
-a pasta raiz.
+Site estático — qualquer hospedagem serve. No GitHub Pages:
+`Settings → Pages → Source: Deploy from a branch`, apontando para a branch e a
+pasta raiz.

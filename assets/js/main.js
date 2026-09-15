@@ -1,17 +1,41 @@
 /* ==========================================================================
-   Davi Aulas de Bateria — interações do site
-   Sem dependências externas. Tudo degrada bem se o JS não carregar.
+   Just Drums — Davi Ramos
+   Vanilla JS, sem dependências.
    ========================================================================== */
 (function () {
   'use strict';
 
-  /* AJUSTAR: número do WhatsApp que recebe as mensagens do formulário.
-     Formato internacional, só dígitos: 55 + DDD + número. */
-  var WHATSAPP = '5500000000000';
+  /* ======================================================================
+     CONFIGURAÇÃO — os dois pontos que você pode querer ajustar
+     ====================================================================== */
+
+  /* 1) Vídeos da galeria.
+        Coloque os arquivos em assets/video/ e liste-os aqui.
+        Um vídeo que não existir é removido da página automaticamente,
+        então pode deixar entradas sobrando sem quebrar nada.
+        'capa' é opcional (imagem mostrada antes de dar play). */
+  var VIDEOS = [
+    { arquivo: 'assets/video/video-1.mp4', titulo: 'Groove e condução',  capa: '' },
+    { arquivo: 'assets/video/video-2.mp4', titulo: 'Viradas',            capa: '' },
+    { arquivo: 'assets/video/video-3.mp4', titulo: 'Treino de técnica',  capa: '' },
+    { arquivo: 'assets/video/video-4.mp4', titulo: 'Tocando na igreja',  capa: '' }
+  ];
+
+  /* 2) Envio do formulário.
+        - Deixando FORMSPREE vazio, o site abre o e-mail do aluno com a
+          mensagem já pronta para daviwrrf@gmail.com (funciona sem cadastro).
+        - Preenchendo com o endpoint do Formspree (https://formspree.io —
+          conta gratuita, cadastrar o e-mail daviwrrf@gmail.com), o envio
+          acontece em segundo plano, sem abrir nada.
+          Exemplo: 'https://formspree.io/f/abcdwxyz' */
+  var FORMSPREE = '';
+  var EMAIL_DESTINO = 'daviwrrf@gmail.com';
+
+  /* ====================================================================== */
 
   var reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------------------------------------------------------------- menu */
+  /* ------------------------------------------------------------- menu */
   var toggle = document.getElementById('navToggle');
   var menu = document.getElementById('navMenu');
 
@@ -26,11 +50,9 @@
       var aberto = menu.classList.toggle('is-open');
       toggle.setAttribute('aria-expanded', String(aberto));
     });
-
     menu.addEventListener('click', function (e) {
       if (e.target.closest('a')) fecharMenu();
     });
-
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && menu.classList.contains('is-open')) {
         fecharMenu();
@@ -39,32 +61,32 @@
     });
   }
 
-  /* ------------------------------------------------- sombra do cabeçalho */
+  /* ------------------------------------------------ sombra do cabeçalho */
   var header = document.querySelector('.site-header');
   if (header) {
-    var aoRolar = function () {
-      header.classList.toggle('is-stuck', window.scrollY > 8);
-    };
+    var aoRolar = function () { header.classList.toggle('is-stuck', window.scrollY > 8); };
     aoRolar();
     window.addEventListener('scroll', aoRolar, { passive: true });
   }
 
   /* ------------------------------------------- animação ao entrar na tela */
-  var reveals = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window) || reduzMovimento) {
-    reveals.forEach(function (el) { el.classList.add('is-visible'); });
-  } else {
-    var obsReveal = new IntersectionObserver(function (entradas) {
+  function observarReveals(alvos) {
+    if (!('IntersectionObserver' in window) || reduzMovimento) {
+      alvos.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+    var obs = new IntersectionObserver(function (entradas) {
       entradas.forEach(function (entrada) {
         if (!entrada.isIntersecting) return;
         entrada.target.classList.add('is-visible');
-        obsReveal.unobserve(entrada.target);
+        obs.unobserve(entrada.target);
       });
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
-    reveals.forEach(function (el) { obsReveal.observe(el); });
+    alvos.forEach(function (el) { obs.observe(el); });
   }
+  observarReveals(Array.prototype.slice.call(document.querySelectorAll('.reveal')));
 
-  /* ----------------------------------------- link ativo na navegação */
+  /* --------------------------------------------- link ativo na navegação */
   var secoes = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
   var linksNav = Array.prototype.slice.call(document.querySelectorAll('.nav a[href^="#"]:not(.btn)'));
 
@@ -72,194 +94,240 @@
     var obsNav = new IntersectionObserver(function (entradas) {
       entradas.forEach(function (entrada) {
         if (!entrada.isIntersecting) return;
-        var id = entrada.target.id;
         linksNav.forEach(function (link) {
-          link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
+          link.classList.toggle('is-active', link.getAttribute('href') === '#' + entrada.target.id);
         });
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
     secoes.forEach(function (s) { obsNav.observe(s); });
   }
 
-  /* --------------------------------------------- contagem dos números */
-  var numeros = document.querySelectorAll('.stat-num[data-count]');
-  if (numeros.length) {
-    if (reduzMovimento || !('IntersectionObserver' in window)) {
-      // valores já estão no HTML; nada a fazer
-    } else {
-      var obsNum = new IntersectionObserver(function (entradas) {
-        entradas.forEach(function (entrada) {
-          if (!entrada.isIntersecting) return;
-          contar(entrada.target);
-          obsNum.unobserve(entrada.target);
-        });
-      }, { threshold: 0.5 });
-      numeros.forEach(function (el) { obsNum.observe(el); });
-    }
-  }
+  /* -------------------------------------------------- galeria de vídeos */
+  var grid = document.getElementById('videoGrid');
+  var vazio = document.getElementById('videoVazio');
 
-  function contar(el) {
-    var alvo = parseInt(el.getAttribute('data-count'), 10);
-    if (isNaN(alvo)) return;
-    var duracao = 900;
-    var inicio = null;
-    el.textContent = '0';
+  if (grid) {
+    var restantes = VIDEOS.length;
 
-    function passo(agora) {
-      if (inicio === null) inicio = agora;
-      var t = Math.min((agora - inicio) / duracao, 1);
-      var suave = 1 - Math.pow(1 - t, 3);
-      el.textContent = String(Math.round(alvo * suave));
-      if (t < 1) requestAnimationFrame(passo);
-    }
-    requestAnimationFrame(passo);
-  }
-
-  /* ------------------------------------------------------ metrônomo */
-  var metroPlay = document.getElementById('metroPlay');
-  var metroLabel = document.getElementById('metroPlayLabel');
-  var metroBpm = document.getElementById('metroBpm');
-  var metroOut = document.getElementById('metroBpmOut');
-  var metroPulse = document.getElementById('metroPulse');
-
-  if (metroBpm && metroOut) {
-    var mostrarBpm = function () { metroOut.textContent = metroBpm.value + ' BPM'; };
-    mostrarBpm();
-    metroBpm.addEventListener('input', mostrarBpm);
-  }
-
-  if (metroPlay && metroBpm && metroPulse) {
-    var luzes = Array.prototype.slice.call(metroPulse.querySelectorAll('span'));
-    var audioCtx = null;
-    var timer = null;
-    var tempoAtual = 0;
-    var tocando = false;
-
-    function clique(acentuado) {
-      if (!audioCtx) return;
-      var osc = audioCtx.createOscillator();
-      var ganho = audioCtx.createGain();
-      var agora = audioCtx.currentTime;
-
-      osc.frequency.value = acentuado ? 1500 : 1000;
-      ganho.gain.setValueAtTime(acentuado ? 0.5 : 0.28, agora);
-      ganho.gain.exponentialRampToValueAtTime(0.0001, agora + 0.05);
-
-      osc.connect(ganho).connect(audioCtx.destination);
-      osc.start(agora);
-      osc.stop(agora + 0.06);
+    function conferirGaleria() {
+      if (!vazio) return;
+      vazio.hidden = grid.children.length > 0;
     }
 
-    function bater() {
-      var acentuado = tempoAtual === 0;
-      clique(acentuado);
+    VIDEOS.forEach(function (item) {
+      var card = document.createElement('figure');
+      card.className = 'video-card reveal';
 
-      luzes.forEach(function (luz, i) {
-        luz.classList.toggle('is-on', i === tempoAtual);
-        luz.classList.toggle('is-downbeat', i === tempoAtual && acentuado);
+      var video = document.createElement('video');
+      video.src = item.arquivo;
+      video.controls = true;
+      video.preload = 'metadata';
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      if (item.capa) video.poster = item.capa;
+
+      // usa a proporção real do arquivo, sem cortar a imagem
+      video.addEventListener('loadedmetadata', function () {
+        if (!video.videoWidth || !video.videoHeight) return;
+        card.style.setProperty('--proporcao', video.videoWidth + ' / ' + video.videoHeight);
+        card.setAttribute('data-proporcao', '');
       });
 
-      tempoAtual = (tempoAtual + 1) % luzes.length;
-      timer = window.setTimeout(bater, 60000 / Number(metroBpm.value));
-    }
+      // arquivo inexistente: o card simplesmente não aparece
+      video.addEventListener('error', function () {
+        card.remove();
+        restantes -= 1;
+        conferirGaleria();
+      });
 
-    function parar() {
-      tocando = false;
-      window.clearTimeout(timer);
-      timer = null;
-      tempoAtual = 0;
-      luzes.forEach(function (luz) { luz.classList.remove('is-on', 'is-downbeat'); });
-      metroPlay.setAttribute('aria-pressed', 'false');
-      if (metroLabel) metroLabel.textContent = 'Tocar';
-    }
+      // só um vídeo toca por vez
+      video.addEventListener('play', function () {
+        grid.querySelectorAll('video').forEach(function (outro) {
+          if (outro !== video) outro.pause();
+        });
+      });
 
-    metroPlay.addEventListener('click', function () {
-      if (tocando) { parar(); return; }
+      var legenda = document.createElement('figcaption');
+      legenda.textContent = item.titulo || '';
 
-      var Ctx = window.AudioContext || window.webkitAudioContext;
-      if (!Ctx) return; // navegador sem Web Audio: botão simplesmente não faz nada
-      if (!audioCtx) audioCtx = new Ctx();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-
-      tocando = true;
-      tempoAtual = 0;
-      metroPlay.setAttribute('aria-pressed', 'true');
-      if (metroLabel) metroLabel.textContent = 'Parar';
-      bater();
+      card.appendChild(video);
+      if (item.titulo) card.appendChild(legenda);
+      grid.appendChild(card);
+      observarReveals([card]);
     });
 
-    // trocar o andamento com o metrônomo rodando reinicia o intervalo
-    metroBpm.addEventListener('change', function () {
-      if (!tocando) return;
-      window.clearTimeout(timer);
-      timer = window.setTimeout(bater, 60000 / Number(metroBpm.value));
-    });
+    conferirGaleria();
+    if (!VIDEOS.length && vazio) vazio.hidden = false;
+  }
 
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden && tocando) parar();
+  /* ------------------------------------------- máscara de telefone */
+  var tel = document.getElementById('telefone');
+
+  function formatarTelefone(valor) {
+    var d = valor.replace(/\D/g, '').slice(0, 11);
+    if (d.length > 6) {
+      var corte = d.length > 10 ? 7 : 6;
+      return '(' + d.slice(0, 2) + ') ' + d.slice(2, corte) + '-' + d.slice(corte);
+    }
+    if (d.length > 2) return '(' + d.slice(0, 2) + ') ' + d.slice(2);
+    return d;
+  }
+
+  if (tel) {
+    tel.addEventListener('input', function () {
+      tel.value = formatarTelefone(tel.value);
     });
   }
 
-  /* --------------------------------------- formulário -> WhatsApp */
+  /* ------------------------------------------------------- formulário */
   var form = document.getElementById('formContato');
+  var sucesso = document.getElementById('formSucesso');
+  var erroGeral = document.getElementById('formErroGeral');
+  var btnEnviar = document.getElementById('btnEnviar');
+  var btnNovo = document.getElementById('btnNovoEnvio');
+
+  var RE_EMAIL = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+  var RE_TEL = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+
+  function marcar(campo, mensagem) {
+    var alvo = form.querySelector('[data-error-for="' + campo.name + '"]');
+    var ok = !mensagem;
+    campo.setAttribute('aria-invalid', ok ? 'false' : 'true');
+    if (alvo) {
+      alvo.textContent = mensagem || '';
+      alvo.hidden = ok;
+    }
+    return ok;
+  }
+
+  function validar() {
+    var c = form.elements;
+    var erros = [];
+
+    if (!marcar(c.nome, c.nome.value.trim().length >= 2 ? '' : 'Informe seu nome.')) erros.push(c.nome);
+    if (!marcar(c.sexo, c.sexo.value ? '' : 'Selecione uma opção.')) erros.push(c.sexo);
+
+    var idade = Number(c.idade.value);
+    var idadeOk = c.idade.value !== '' && Number.isInteger(idade) && idade >= 1 && idade <= 120;
+    if (!marcar(c.idade, idadeOk ? '' : 'Informe uma idade válida.')) erros.push(c.idade);
+
+    if (!marcar(c.email, RE_EMAIL.test(c.email.value.trim()) ? '' : 'Informe um e-mail válido.')) erros.push(c.email);
+
+    // telefone é opcional: só valida o formato se tiver sido preenchido
+    var telValor = c.telefone.value.trim();
+    var telOk = telValor === '' || RE_TEL.test(telValor);
+    if (!marcar(c.telefone, telOk ? '' : 'Use o formato (61) 99999-9999.')) erros.push(c.telefone);
+
+    return erros;
+  }
+
+  function montarDados() {
+    var c = form.elements;
+    var nomeCompleto = (c.nome.value.trim() + ' ' + c.sobrenome.value.trim()).trim();
+    return {
+      nome: c.nome.value.trim(),
+      sobrenome: c.sobrenome.value.trim(),
+      nomeCompleto: nomeCompleto,
+      sexo: c.sexo.value,
+      idade: c.idade.value,
+      telefone: c.telefone.value.trim(),
+      email: c.email.value.trim(),
+      interesse: c.interesse.checked ? 'Sim' : 'Não'
+    };
+  }
+
+  function corpoMensagem(d) {
+    return [
+      'Novo contato pelo site Just Drums',
+      '',
+      'Nome: ' + d.nomeCompleto,
+      'Sexo: ' + d.sexo,
+      'Idade: ' + d.idade,
+      'Telefone: ' + (d.telefone || 'não informado'),
+      'E-mail: ' + d.email,
+      'Tenho interesse: ' + d.interesse
+    ].join('\n');
+  }
+
+  function mostrarSucesso() {
+    if (!sucesso) return;
+    form.hidden = true;
+    sucesso.hidden = false;
+    sucesso.classList.add('is-visible');
+    if (typeof sucesso.scrollIntoView === 'function') {
+      sucesso.scrollIntoView({ behavior: reduzMovimento ? 'auto' : 'smooth', block: 'center' });
+    }
+  }
+
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (erroGeral) erroGeral.hidden = true;
 
-      var status = document.getElementById('formStatus');
-      var nome = form.elements.nome;
-      var telefone = form.elements.telefone;
-      var valido = true;
-
-      function validar(campo, ok) {
-        var erro = form.querySelector('[data-error-for="' + campo.name + '"]');
-        campo.setAttribute('aria-invalid', ok ? 'false' : 'true');
-        if (erro) erro.hidden = ok;
-        if (!ok && valido) campo.focus();
-        if (!ok) valido = false;
-      }
-
-      validar(nome, nome.value.trim().length >= 2);
-      validar(telefone, telefone.value.replace(/\D/g, '').length >= 10);
-
-      if (!valido) {
-        if (status) status.textContent = '';
+      var erros = validar();
+      if (erros.length) {
+        erros[0].focus();
         return;
       }
 
-      var linhas = [
-        'Olá, Davi! Quero agendar a aula experimental.',
-        '',
-        'Nome: ' + nome.value.trim(),
-        'WhatsApp: ' + telefone.value.trim(),
-        'Nível: ' + form.elements.nivel.value,
-        'Modalidade: ' + form.elements.modalidade.value
-      ];
+      var dados = montarDados();
 
-      var objetivo = form.elements.mensagem.value.trim();
-      if (objetivo) linhas.push('Objetivo: ' + objetivo);
+      if (FORMSPREE) {
+        btnEnviar.disabled = true;
+        btnEnviar.textContent = 'Enviando…';
 
-      var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(linhas.join('\n'));
-      window.open(url, '_blank', 'noopener');
+        fetch(FORMSPREE, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nome: dados.nomeCompleto,
+            sexo: dados.sexo,
+            idade: dados.idade,
+            telefone: dados.telefone,
+            email: dados.email,
+            interesse: dados.interesse,
+            _subject: 'Novo contato pelo site Just Drums — ' + dados.nomeCompleto
+          })
+        }).then(function (r) {
+          if (!r.ok) throw new Error('falha no envio');
+          form.reset();
+          mostrarSucesso();
+        }).catch(function () {
+          if (erroGeral) {
+            erroGeral.textContent = 'Não consegui enviar agora. Tente novamente ou me chame no WhatsApp (61) 99514-9266.';
+            erroGeral.hidden = false;
+          }
+        }).then(function () {
+          btnEnviar.disabled = false;
+          btnEnviar.textContent = 'Enviar';
+        });
+        return;
+      }
 
-      if (status) status.textContent = 'Tudo certo! Abrimos o WhatsApp com sua mensagem.';
+      // sem Formspree: abre o e-mail com a mensagem pronta
+      var assunto = 'Novo contato pelo site Just Drums — ' + dados.nomeCompleto;
+      window.location.href = 'mailto:' + EMAIL_DESTINO +
+        '?subject=' + encodeURIComponent(assunto) +
+        '&body=' + encodeURIComponent(corpoMensagem(dados));
+
       form.reset();
+      mostrarSucesso();
+    });
+
+    // limpa o erro do campo assim que a pessoa começa a corrigir
+    Array.prototype.forEach.call(form.elements, function (campo) {
+      if (!campo.name) return;
+      campo.addEventListener('input', function () {
+        if (campo.getAttribute('aria-invalid') === 'true') marcar(campo, '');
+      });
     });
   }
 
-  /* --------------------------------------- máscara simples de telefone */
-  var tel = document.getElementById('telefone');
-  if (tel) {
-    tel.addEventListener('input', function () {
-      var d = tel.value.replace(/\D/g, '').slice(0, 11);
-      if (d.length > 6) {
-        var corte = d.length > 10 ? 7 : 6;
-        tel.value = '(' + d.slice(0, 2) + ') ' + d.slice(2, corte) + '-' + d.slice(corte);
-      } else if (d.length > 2) {
-        tel.value = '(' + d.slice(0, 2) + ') ' + d.slice(2);
-      } else {
-        tel.value = d;
-      }
+  if (btnNovo) {
+    btnNovo.addEventListener('click', function () {
+      sucesso.hidden = true;
+      form.hidden = false;
+      form.elements.nome.focus();
     });
   }
 
