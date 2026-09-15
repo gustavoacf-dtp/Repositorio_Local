@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Davi Aulas de Bateria — Aulas presenciais e online</title>
+<meta name="description" content="Aulas de bateria para iniciantes e intermediários com o professor Davi. Aulas presenciais e online, primeira aula experimental gratuita.">
+<meta name="theme-color" content="#14110f">
+<meta property="og:title" content="Davi Aulas de Bateria">
+<meta property="og:description" content="Aulas de bateria para todas as idades. Primeira aula experimental gratuita.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%23e8a33d'/><circle cx='50' cy='50' r='16' fill='%2314110f'/></svg>">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="site-header" id="cabecalho">
+  <div class="container header-inner">
+    <a class="brand" href="#inicio" aria-label="Davi Aulas de Bateria — início">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">Davi<strong>Bateria</strong></span>
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+      <span class="sr-only">Abrir menu de navegação</span>
+    </button>
+
+    <nav class="nav" id="navMenu" aria-label="Navegação principal">
+      <ul>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#aulas">Aulas</a></li>
+        <li><a href="#metodo">Método</a></li>
+        <li><a href="#planos">Planos</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
+        <li><a href="#faq">Dúvidas</a></li>
+        <li><a class="btn btn-sm btn-primary" href="#contato">Agendar aula</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="inicio">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Aulas presenciais e online</p>
+        <h1>Aprenda bateria <span class="hl">tocando música de verdade</span> desde a primeira aula.</h1>
+        <p class="lead">
+          Aulas individuais com o professor Davi para iniciantes, retomadas e músicos
+          intermediários que querem groove firme, leitura e repertório.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="#contato">Quero a aula experimental</a>
+          <a class="btn btn-ghost btn-lg" href="#planos">Ver planos e valores</a>
+        </div>
+        <ul class="hero-badges">
+          <li><strong>1ª aula</strong> experimental gratuita</li>
+          <li><strong>Todas</strong> as idades</li>
+          <li><strong>Sem</strong> mensalidade obrigatória</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <svg class="kit" viewBox="0 0 420 340" role="img" focusable="false">
+          <defs>
+            <radialGradient id="peleGrad" cx="42%" cy="34%">
+              <stop offset="0%"  class="stop-pele-a"/>
+              <stop offset="70%" class="stop-pele-b"/>
+              <stop offset="100%" class="stop-pele-c"/>
+            </radialGradient>
+            <linearGradient id="cascoGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"  class="stop-casco-a"/>
+              <stop offset="45%" class="stop-casco-b"/>
+              <stop offset="100%" class="stop-casco-c"/>
+            </linearGradient>
+            <radialGradient id="pratoGrad" cx="38%" cy="30%">
+              <stop offset="0%"  class="stop-prato-a"/>
+              <stop offset="62%" class="stop-prato-b"/>
+              <stop offset="100%" class="stop-prato-c"/>
+            </radialGradient>
+          </defs>
+
+          <!-- halo pulsante atrás do kit -->
+          <circle class="kit-halo" cx="210" cy="215" r="128"/>
+
+          <!-- estantes -->
+          <g class="kit-stand">
+            <path d="M58 92 L58 300 M30 300 L86 300"/>
+            <path d="M366 108 L366 300 M340 300 L392 300"/>
+            <path d="M120 150 L120 300 M98 300 L142 300"/>
+          </g>
+
+          <!-- prato de ataque (esquerda) -->
+          <g class="kit-cymbal" transform="rotate(-11 78 90)">
+            <ellipse cx="78" cy="90" rx="62" ry="11" fill="url(#pratoGrad)"/>
+            <ellipse cx="78" cy="87" rx="62" ry="11" class="cymbal-top"/>
+            <circle cx="78" cy="85" r="8" class="cymbal-bell"/>
+          </g>
+
+          <!-- prato de condução (direita) -->
+          <g class="kit-cymbal kit-cymbal-b" transform="rotate(9 352 106)">
+            <ellipse cx="352" cy="109" rx="56" ry="10" fill="url(#pratoGrad)"/>
+            <ellipse cx="352" cy="106" rx="56" ry="10" class="cymbal-top"/>
+            <circle cx="352" cy="104" r="7" class="cymbal-bell"/>
+          </g>
+
+          <!-- tom 1 -->
+          <g class="kit-tom">
+            <path d="M138 176 L138 214 A38 13 0 0 0 214 214 L214 176 Z" fill="url(#cascoGrad)"/>
+            <ellipse cx="176" cy="176" rx="38" ry="13" fill="url(#peleGrad)"/>
+            <ellipse cx="176" cy="176" rx="38" ry="13" class="aro"/>
+          </g>
+
+          <!-- tom 2 -->
+          <g class="kit-tom kit-tom-b">
+            <path d="M226 182 L226 216 A34 12 0 0 0 294 216 L294 182 Z" fill="url(#cascoGrad)"/>
+            <ellipse cx="260" cy="182" rx="34" ry="12" fill="url(#peleGrad)"/>
+            <ellipse cx="260" cy="182" rx="34" ry="12" class="aro"/>
+          </g>
+
+          <!-- surdo de chão -->
+          <g class="kit-floor">
+            <path d="M306 202 L306 272 A36 13 0 0 0 378 272 L378 202 Z" fill="url(#cascoGrad)"/>
+            <ellipse cx="342" cy="202" rx="36" ry="13" fill="url(#peleGrad)"/>
+            <ellipse cx="342" cy="202" rx="36" ry="13" class="aro"/>
+          </g>
+
+          <!-- caixa -->
+          <g class="kit-snare">
+            <path d="M46 214 L46 248 A40 14 0 0 0 126 248 L126 214 Z" fill="url(#cascoGrad)"/>
+            <ellipse cx="86" cy="214" rx="40" ry="14" fill="url(#peleGrad)"/>
+            <ellipse cx="86" cy="214" rx="40" ry="14" class="aro"/>
+          </g>
+
+          <!-- bumbo -->
+          <g class="kit-kick">
+            <circle cx="210" cy="248" r="74" fill="url(#cascoGrad)"/>
+            <circle cx="210" cy="248" r="64" fill="url(#peleGrad)"/>
+            <circle cx="210" cy="248" r="64" class="aro"/>
+            <circle cx="210" cy="248" r="17" class="kick-hole"/>
+          </g>
+
+          <!-- pedal -->
+          <path class="kit-stand" d="M210 322 L210 300 M176 322 L244 322"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Metrônomo: brinquedo interativo, também serve de ferramenta de estudo -->
+    <div class="container">
+      <div class="metronome reveal" id="metronome">
+        <div class="metronome-head">
+          <h2 class="metronome-title">Metrônomo de bolso</h2>
+          <p class="metronome-sub">Teste seu tempo agora mesmo — é a ferramenta que você vai usar em casa.</p>
+        </div>
+        <div class="metronome-body">
+          <button class="btn btn-primary metronome-play" id="metroPlay" aria-pressed="false">
+            <span id="metroPlayLabel">Tocar</span>
+          </button>
+          <div class="metronome-bpm">
+            <label for="metroBpm">Andamento</label>
+            <input type="range" id="metroBpm" min="40" max="208" step="1" value="90">
+            <output id="metroBpmOut" for="metroBpm">90 BPM</output>
+          </div>
+          <div class="metronome-pulse" id="metroPulse" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOBRE ============ -->
+  <section class="section" id="sobre">
+    <div class="container grid-2">
+      <div class="reveal">
+        <p class="eyebrow">Quem ensina</p>
+        <h2>Prazer, sou o Davi.</h2>
+        <p>
+          <!-- AJUSTAR: bio real do professor (formação, anos de estrada, bandas, igreja, estilos). -->
+          Sou baterista e professor. Já toquei em bandas, gravações e eventos, e há anos
+          ajudo alunos a saírem do zero até tocar as músicas que gostam com segurança.
+        </p>
+        <p>
+          Minha prioridade é que você toque desde o começo: exercícios técnicos existem
+          para servir à música, nunca o contrário.
+        </p>
+        <ul class="check-list">
+          <li>Aulas 100% individuais, no seu ritmo</li>
+          <li>Plano de estudo por escrito depois de cada aula</li>
+          <li>Repertório escolhido junto com você</li>
+        </ul>
+      </div>
+
+      <div class="stats reveal">
+        <!-- AJUSTAR: números reais. -->
+        <div class="stat"><span class="stat-num" data-count="10">10</span><span class="stat-label">anos tocando</span></div>
+        <div class="stat"><span class="stat-num" data-count="120">120</span><span class="stat-label">alunos atendidos</span></div>
+        <div class="stat"><span class="stat-num" data-count="4">4</span><span class="stat-label">estilos principais</span></div>
+        <div class="stat"><span class="stat-num" data-count="100">100</span><span class="stat-label">% aulas práticas</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AULAS ============ -->
+  <section class="section section-alt" id="aulas">
+    <div class="container">
+      <header class="section-head reveal">
+        <p class="eyebrow">Modalidades</p>
+        <h2>Escolha o formato que cabe na sua rotina</h2>
+        <p class="section-sub">Mesmo conteúdo, mesma atenção individual. Muda só o lugar.</p>
+      </header>
+
+      <div class="cards">
+        <article class="card reveal">
+          <span class="card-icon" aria-hidden="true">🥁</span>
+          <h3>Presencial</h3>
+          <p>Aula no estúdio, com bateria acústica completa e ajuste de postura e pegada na hora.</p>
+          <ul class="card-list">
+            <li>Bateria disponível no local</li>
+            <li>Ideal para começar do zero</li>
+            <li>Duração de 50 minutos</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <span class="card-icon" aria-hidden="true">💻</span>
+          <h3>Online ao vivo</h3>
+          <p>Aula por vídeo, com material enviado antes e gravação do encontro para revisar depois.</p>
+          <ul class="card-list">
+            <li>De qualquer cidade</li>
+            <li>Funciona com bateria ou pad de estudo</li>
+            <li>Duração de 50 minutos</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <span class="card-icon" aria-hidden="true">🎯</span>
+          <h3>Intensivo de repertório</h3>
+          <p>Para quem tem data marcada: show, culto, casamento ou audição. Foco total nas músicas.</p>
+          <ul class="card-list">
+            <li>Montagem do setlist</li>
+            <li>Marcações, viradas e dinâmica</li>
+            <li>Pacote de 4 encontros</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MÉTODO ============ -->
+  <section class="section" id="metodo">
+    <div class="container">
+      <header class="section-head reveal">
+        <p class="eyebrow">Como funciona</p>
+        <h2>Do primeiro contato à primeira música</h2>
+      </header>
+
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="step-num">1</span>
+          <h3>Conversa rápida</h3>
+          <p>Você me conta sua experiência, seus estilos favoritos e quanto tempo tem para estudar.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">2</span>
+          <h3>Aula experimental gratuita</h3>
+          <p>Uma aula completa, sem compromisso, para você sentir como é estudar comigo.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">3</span>
+          <h3>Plano de estudo</h3>
+          <p>Montamos metas de 30, 60 e 90 dias com exercícios e músicas definidas.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">4</span>
+          <h3>Aulas semanais</h3>
+          <p>Cada encontro revisa o que você treinou, corrige o que travou e abre o próximo passo.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ PLANOS ============ -->
+  <section class="section section-alt" id="planos">
+    <div class="container">
+      <header class="section-head reveal">
+        <p class="eyebrow">Planos</p>
+        <h2>Valores claros, sem pegadinha</h2>
+        <p class="section-sub">
+          <!-- AJUSTAR: valores reais, formas de pagamento e política de reposição. -->
+          Valores de referência. Confirme condições atuais pelo WhatsApp.
+        </p>
+      </header>
+
+      <div class="cards cards-3">
+        <article class="card plan reveal">
+          <h3>Aula avulsa</h3>
+          <p class="price"><span class="price-cur">R$</span>__<span class="price-per">/aula</span></p>
+          <ul class="card-list">
+            <li>50 minutos individuais</li>
+            <li>Sem fidelidade</li>
+            <li>Material da aula incluso</li>
+          </ul>
+          <a class="btn btn-ghost btn-block" href="#contato">Agendar</a>
+        </article>
+
+        <article class="card plan plan-featured reveal">
+          <span class="plan-tag">Mais escolhido</span>
+          <h3>Mensal semanal</h3>
+          <p class="price"><span class="price-cur">R$</span>__<span class="price-per">/mês</span></p>
+          <ul class="card-list">
+            <li>4 aulas por mês</li>
+            <li>Plano de estudo por escrito</li>
+            <li>Suporte por mensagem entre as aulas</li>
+            <li>1 reposição por mês</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="#contato">Começar</a>
+        </article>
+
+        <article class="card plan reveal">
+          <h3>Intensivo</h3>
+          <p class="price"><span class="price-cur">R$</span>__<span class="price-per">/pacote</span></p>
+          <ul class="card-list">
+            <li>4 encontros focados em repertório</li>
+            <li>Setlist montado com você</li>
+            <li>Gravação das aulas</li>
+          </ul>
+          <a class="btn btn-ghost btn-block" href="#contato">Falar sobre o pacote</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DEPOIMENTOS ============ -->
+  <section class="section" id="depoimentos">
+    <div class="container">
+      <header class="section-head reveal">
+        <p class="eyebrow">Alunos</p>
+        <h2>Quem já senta na banqueta</h2>
+        <!-- AJUSTAR: substituir por depoimentos reais, com autorização de uso. -->
+        <p class="section-sub">Resultados de quem estuda com constância.</p>
+      </header>
+
+      <div class="cards">
+        <figure class="quote reveal">
+          <blockquote>Comecei sem nunca ter tocado e em dois meses já estava tocando a música que escolhi.</blockquote>
+          <figcaption>Aluno iniciante <span>— adulto, aulas presenciais</span></figcaption>
+        </figure>
+        <figure class="quote reveal">
+          <blockquote>As aulas online funcionaram melhor do que eu esperava. O material enviado antes ajuda muito.</blockquote>
+          <figcaption>Aluna intermediária <span>— aulas online</span></figcaption>
+        </figure>
+        <figure class="quote reveal">
+          <blockquote>Meu filho não perde uma aula. O Davi conseguiu equilibrar disciplina e diversão.</blockquote>
+          <figcaption>Responsável <span>— aluno de 11 anos</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section section-alt" id="faq">
+    <div class="container narrow">
+      <header class="section-head reveal">
+        <p class="eyebrow">Dúvidas frequentes</p>
+        <h2>Antes de agendar</h2>
+      </header>
+
+      <div class="faq">
+        <details class="reveal">
+          <summary>Preciso ter bateria em casa?</summary>
+          <p>Não para começar. Um pad de estudo e um par de baquetas já resolvem as primeiras semanas,
+             e nas aulas presenciais a bateria do estúdio fica à sua disposição.</p>
+        </details>
+        <details class="reveal">
+          <summary>Qual a idade mínima?</summary>
+          <p><!-- AJUSTAR: idade mínima atendida. --> Atendo crianças, adolescentes e adultos.
+             Para os menores, a aula é adaptada em duração e linguagem.</p>
+        </details>
+        <details class="reveal">
+          <summary>Nunca toquei nada na vida. Dá pra começar?</summary>
+          <p>Dá. A maior parte dos alunos chega exatamente assim. A primeira aula já sai com um groove tocado.</p>
+        </details>
+        <details class="reveal">
+          <summary>E se eu precisar faltar?</summary>
+          <p><!-- AJUSTAR: política real de remarcação. --> Avisando com antecedência, remarcamos
+             a aula dentro do mesmo mês.</p>
+        </details>
+        <details class="reveal">
+          <summary>Trabalha com leitura de partitura?</summary>
+          <p>Sim, na medida do seu objetivo. Quem quer tocar em banda aprende o suficiente para se comunicar;
+             quem quer prestar audição ou prova aprofunda a leitura.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTATO ============ -->
+  <section class="section" id="contato">
+    <div class="container grid-2">
+      <div class="reveal">
+        <p class="eyebrow">Contato</p>
+        <h2>Vamos marcar sua aula experimental</h2>
+        <p>Preencha ao lado e a mensagem abre pronta no WhatsApp — ou fale direto pelos canais abaixo.</p>
+
+        <ul class="contact-list">
+          <!-- AJUSTAR: telefone, e-mail, @ do Instagram e endereço reais. -->
+          <li><span aria-hidden="true">💬</span> <a href="https://wa.me/5500000000000">WhatsApp (00) 00000-0000</a></li>
+          <li><span aria-hidden="true">✉️</span> <a href="mailto:contato@exemplo.com">contato@exemplo.com</a></li>
+          <li><span aria-hidden="true">📷</span> <a href="https://instagram.com/" rel="me noopener">@instagram</a></li>
+          <li><span aria-hidden="true">📍</span> Bairro, Cidade — UF (aulas presenciais)</li>
+          <li><span aria-hidden="true">🕒</span> Segunda a sábado, das 9h às 21h</li>
+        </ul>
+      </div>
+
+      <form class="form reveal" id="formContato" novalidate>
+        <div class="field">
+          <label for="nome">Seu nome</label>
+          <input type="text" id="nome" name="nome" autocomplete="name" required>
+          <p class="field-error" data-error-for="nome" hidden>Informe seu nome.</p>
+        </div>
+
+        <div class="field">
+          <label for="telefone">WhatsApp</label>
+          <input type="tel" id="telefone" name="telefone" inputmode="tel" autocomplete="tel"
+                 placeholder="(00) 00000-0000" required>
+          <p class="field-error" data-error-for="telefone" hidden>Informe um telefone com DDD.</p>
+        </div>
+
+        <div class="field">
+          <label for="nivel">Seu nível</label>
+          <select id="nivel" name="nivel">
+            <option value="Nunca toquei">Nunca toquei</option>
+            <option value="Iniciante">Iniciante</option>
+            <option value="Intermediário">Intermediário</option>
+            <option value="Retomando depois de uma pausa">Retomando depois de uma pausa</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="modalidade">Modalidade</label>
+          <select id="modalidade" name="modalidade">
+            <option value="Presencial">Presencial</option>
+            <option value="Online">Online</option>
+            <option value="Tanto faz">Tanto faz</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="mensagem">Conte seu objetivo <span class="optional">(opcional)</span></label>
+          <textarea id="mensagem" name="mensagem" rows="3"
+                    placeholder="Ex.: quero tocar rock e aprender viradas"></textarea>
+        </div>
+
+        <button class="btn btn-primary btn-block btn-lg" type="submit">Enviar pelo WhatsApp</button>
+        <p class="form-note">Ao enviar, o WhatsApp abre com a mensagem já escrita. Nenhum dado é armazenado neste site.</p>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="brand-text footer-brand">Davi<strong>Bateria</strong></p>
+      <p class="footer-note">Aulas de bateria presenciais e online.</p>
+    </div>
+    <nav aria-label="Links do rodapé">
+      <ul class="footer-links">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#planos">Planos</a></li>
+        <li><a href="#faq">Dúvidas</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+    <p class="copy">© <span id="ano">2026</span> Davi Aulas de Bateria. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<a class="whats-float" href="https://wa.me/5500000000000" aria-label="Falar no WhatsApp">
+  <span aria-hidden="true">💬</span>
+</a>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
